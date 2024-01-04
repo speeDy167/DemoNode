@@ -26,14 +26,25 @@ pipeline{
       }
     }
 
-    stage("Docker push"){
-      steps{
-        withCredentials([usernamePassword(credentialsId: 'docker_cred', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable 'DOCKERHUB_USERNAME')]){
-          sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
-          sh 'docker tag my-node-app:1.0'
-          sh 'docker push peter167/my-node-app:1.0'
-          sh 'docker logout'
-      }
+stage("Docker push") {
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'docker_cred', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+           
+                // Log in to Docker Hub
+                sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
+
+                // Tag the Docker image
+                sh "docker tag my-node-app:1.0 peter167/my-node-app:1.0"
+
+                // Push the Docker image to Docker Hub
+                sh "docker push peter167/my-node-app:1.0"
+
+                // Logout from Docker Hub
+                sh "docker logout"
+          
+        }
     }
+}
+
   }
 }
