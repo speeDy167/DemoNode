@@ -14,6 +14,8 @@ sudo systemctl start jenkins
 sonarqube:
 admin
 ftp001@
+# run in docker
+docker run -d -p 9000:9000 sonarqube:lts-community
 
 
 # Config docker
